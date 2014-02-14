@@ -46,30 +46,31 @@ int main(int argc, char **argv) {
 	// TODO: Smart pointers at some points.
 	SDL_Window *win = SDL_CreateWindow("Hello World!", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (win == nullptr) {
-		logSDLError(std::cout, "SDL_CreateWindow");
-		return 1;
+		logSDLError(std::cout, "CreateWindow");
+		return 2;
 	}
 
 	auto renderFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
 	SDL_Renderer *ren = SDL_CreateRenderer(win, -1, renderFlags);
 	if (ren == nullptr) {
-		logSDLError(std::cout, "SDL_CreateRenderer");
-		return 1;
+		logSDLError(std::cout, "CreateRenderer");
+		return 3;
 	}
 
-	SDL_Texture *tex = loadTexture("hello.bmp", ren);
-	if (tex == nullptr) {
-		logSDLError(std::cout, "SDL_CreateTextureFromSurface");
-		return 1;
+	SDL_Texture *image = loadTexture("image.bmp", ren);
+	SDL_Texture *background = loadTexture("background.bmp", ren);
+	if (image == nullptr || background == nullptr) {
+		return 4;
 	}
 
 	SDL_RenderClear(ren);
-	SDL_RenderCopy(ren, tex, nullptr, nullptr);
+	SDL_RenderCopy(ren, image, nullptr, nullptr);
 	SDL_RenderPresent(ren);
 
 	SDL_Delay(2000);
 
-	SDL_DestroyTexture(tex);
+	SDL_DestroyTexture(image);
+	SDL_DestroyTexture(background);
 	SDL_DestroyRenderer(ren);
 	SDL_DestroyWindow(win);
 	SDL_Quit();
