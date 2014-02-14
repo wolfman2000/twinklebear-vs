@@ -9,6 +9,25 @@ void logSDLError(std::ostream &os, std::string const &msg) {
 	os << msg << " error: " << SDL_GetError() << std::endl;
 }
 
+SDL_Texture* loadTexture(std::string const &file, SDL_Renderer *ren) {
+	SDL_Texture *texture = nullptr;
+	SDL_Surface *loadedImage = SDL_LoadBMP(file.c_str());
+
+	if (loadedImage != nullptr) {
+		texture = SDL_CreateTextureFromSurface(ren, loadedImage);
+		SDL_FreeSurface(loadedImage);
+
+		if (texture == nullptr) {
+			logSDLError(std::cout, "CreateTextureFromSurface");
+		}
+	}
+	else {
+		logSDLError(std::cout, "LoadBMP");
+	}
+
+	return texture;
+}
+
 int main(int argc, char **argv) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		logSDLError(std::cout, "SDL_Init");
@@ -29,15 +48,7 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 
-	SDL_Surface *bmp = SDL_LoadBMP("hello.bmp");
-	if (bmp == nullptr) {
-		logSDLError(std::cout, "SDL_LoadBMP");
-		return 1;
-	}
-
-	SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);
-	// At this point, we no longer need the bmp surface.
-	SDL_FreeSurface(bmp);
+	SDL_Texture *tex = loadTexture("hello.bmp", ren);
 	if (tex == nullptr) {
 		logSDLError(std::cout, "SDL_CreateTextureFromSurface");
 		return 1;
