@@ -1,28 +1,22 @@
 #include <iostream>
 #include <string>
 #include <SDL.h>
+#include <SDL_Image.h>
 
 int const SCREEN_WIDTH = 640;
 int const SCREEN_HEIGHT = 480;
+
+// focusing on square tiles.
+int const TILE_SIZE = 40;
 
 void logSDLError(std::ostream &os, std::string const &msg) {
 	os << msg << " error: " << SDL_GetError() << std::endl;
 }
 
 SDL_Texture* loadTexture(std::string const &file, SDL_Renderer *ren) {
-	SDL_Texture *texture = nullptr;
-	SDL_Surface *loadedImage = SDL_LoadBMP(file.c_str());
-
-	if (loadedImage != nullptr) {
-		texture = SDL_CreateTextureFromSurface(ren, loadedImage);
-		SDL_FreeSurface(loadedImage);
-
-		if (texture == nullptr) {
-			logSDLError(std::cout, "CreateTextureFromSurface");
-		}
-	}
-	else {
-		logSDLError(std::cout, "LoadBMP");
+	SDL_Texture *texture = IMG_LoadTexture(ren, file.c_str());
+	if (texture == nullptr) {
+		logSDLError(std::cout, "LoadTExture");
 	}
 
 	return texture;
