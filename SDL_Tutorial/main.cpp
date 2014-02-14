@@ -73,6 +73,10 @@ int main(int argc, char **argv) {
 		}
 	}
 	
+	int igWidth, igHeight;
+	SDL_QueryTexture(image, nullptr, nullptr, &igWidth, &igHeight);
+	renderTexture(image, ren, SCREEN_WIDTH / 2 - igWidth / 2, SCREEN_HEIGHT / 2 - igHeight / 2);
+
 	SDL_RenderPresent(ren);
 
 	SDL_Delay(2000);
