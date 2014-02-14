@@ -67,10 +67,11 @@ int main(int argc, char **argv) {
 	
 	int bgWidth, bgHeight;
 	SDL_QueryTexture(background, nullptr, nullptr, &bgWidth, &bgHeight);
-	renderTexture(background, ren, 0, 0);
-	renderTexture(background, ren, bgWidth, 0);
-	renderTexture(background, ren, 0, bgHeight);
-	renderTexture(background, ren, bgWidth, bgHeight);
+	for (int gridX = 0; gridX < SCREEN_WIDTH / bgWidth; ++gridX) {
+		for (int gridY = 0; gridY < SCREEN_HEIGHT / bgHeight; ++gridY) {
+			renderTexture(background, ren, gridX * bgWidth, gridY * bgHeight);
+		}
+	}
 	
 	SDL_RenderPresent(ren);
 
