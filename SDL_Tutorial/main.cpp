@@ -1,6 +1,9 @@
 #include <iostream>
 #include <SDL.h>
 
+int const SCREEN_WIDTH = 640;
+int const SCREEN_HEIGHT = 480;
+
 int main(int argc, char **argv) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
@@ -8,7 +11,7 @@ int main(int argc, char **argv) {
 	}
 
 	// TODO: Smart pointers at some points.
-	SDL_Window *win = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+	SDL_Window *win = SDL_CreateWindow("Hello World!", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (win == nullptr) {
 		std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
 		return 1;
