@@ -44,24 +44,29 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 
+	if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG) {
+		logSDLError(std::cout, "IMG_Init");
+		return 2;
+	}
+
 	// TODO: Smart pointers at some points.
 	SDL_Window *win = SDL_CreateWindow("Hello World!", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (win == nullptr) {
 		logSDLError(std::cout, "CreateWindow");
-		return 2;
+		return 3;
 	}
 
 	auto renderFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
 	SDL_Renderer *ren = SDL_CreateRenderer(win, -1, renderFlags);
 	if (ren == nullptr) {
 		logSDLError(std::cout, "CreateRenderer");
-		return 3;
+		return 4;
 	}
 
-	SDL_Texture *image = loadTexture("image.bmp", ren);
-	SDL_Texture *background = loadTexture("background.bmp", ren);
+	SDL_Texture *image = loadTexture("image.png", ren);
+	SDL_Texture *background = loadTexture("background.png", ren);
 	if (image == nullptr || background == nullptr) {
-		return 4;
+		return 5;
 	}
 
 	SDL_RenderClear(ren);
