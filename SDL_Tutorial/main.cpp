@@ -64,7 +64,14 @@ int main(int argc, char **argv) {
 	}
 
 	SDL_RenderClear(ren);
-	SDL_RenderCopy(ren, image, nullptr, nullptr);
+	
+	int bgWidth, bgHeight;
+	SDL_QueryTexture(background, nullptr, nullptr, &bgWidth, &bgHeight);
+	renderTexture(background, ren, 0, 0);
+	renderTexture(background, ren, bgWidth, 0);
+	renderTexture(background, ren, 0, bgHeight);
+	renderTexture(background, ren, bgWidth, bgHeight);
+	
 	SDL_RenderPresent(ren);
 
 	SDL_Delay(2000);
