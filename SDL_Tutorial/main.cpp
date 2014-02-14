@@ -71,12 +71,14 @@ int main(int argc, char **argv) {
 
 	SDL_RenderClear(ren);
 	
-	int bgWidth, bgHeight;
-	SDL_QueryTexture(background, nullptr, nullptr, &bgWidth, &bgHeight);
-	for (int gridX = 0; gridX < SCREEN_WIDTH / bgWidth; ++gridX) {
-		for (int gridY = 0; gridY < SCREEN_HEIGHT / bgHeight; ++gridY) {
-			renderTexture(background, ren, gridX * bgWidth, gridY * bgHeight);
-		}
+	// single loop instead of nested loop planning.
+	int xTiles = SCREEN_WIDTH / TILE_SIZE;
+	int yTiles = SCREEN_HEIGHT / TILE_SIZE;
+
+	for (int i = 0; i < xTiles * yTiles; ++i) {
+		int x = i % xTiles;
+		int y = i / xTiles;
+		renderTexture(background, ren, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 	}
 	
 	int igWidth, igHeight;
@@ -91,6 +93,8 @@ int main(int argc, char **argv) {
 	SDL_DestroyTexture(background);
 	SDL_DestroyRenderer(ren);
 	SDL_DestroyWindow(win);
+
+	IMG_Quit();
 	SDL_Quit();
 
 	return 0;
