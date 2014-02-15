@@ -87,23 +87,28 @@ int main(int argc, char **argv) {
 		return 2;
 	}
 
+	if (TTF_Init() != 0) {
+		logSDLError(std::cout, "TTF_Init");
+		return 3;
+	}
+
 	// TODO: Smart pointers at some points.
 	SDL_Window *win = SDL_CreateWindow("Hello World!", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (win == nullptr) {
 		logSDLError(std::cout, "CreateWindow");
-		return 3;
+		return 4;
 	}
 
 	auto renderFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
 	SDL_Renderer *ren = SDL_CreateRenderer(win, -1, renderFlags);
 	if (ren == nullptr) {
 		logSDLError(std::cout, "CreateRenderer");
-		return 4;
+		return 5;
 	}
 
 	SDL_Texture *image = loadTexture("image.png", ren);
 	if (image == nullptr) {
-		return 5;
+		return 6;
 	}
 	
 	SDL_Event evt;
