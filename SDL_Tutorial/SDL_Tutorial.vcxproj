@@ -182,6 +182,9 @@ copy "$(ProjectDir)*.ttf" "$(TargetDir)"</Command>
   <ItemGroup>
     <Font Include="SourceSansPro-Regular.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Window.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
