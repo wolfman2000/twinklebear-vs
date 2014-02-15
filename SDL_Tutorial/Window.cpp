@@ -83,3 +83,17 @@ SDL_Texture* Window::RenderText(std::string const &message, std::string const &f
 	TTF_CloseFont(font);
 	return texture;
 }
+
+void Window::Clear() {
+	SDL_RenderClear(_renderer.get());
+}
+
+void Window::Present() {
+	SDL_RenderPresent(_renderer.get());
+}
+
+SDL_Rect Window::Box() {
+	// update the box variable.
+	SDL_GetWindowSize(_window.get(), &_box.w, &_box.h);
+	return _box;
+}
