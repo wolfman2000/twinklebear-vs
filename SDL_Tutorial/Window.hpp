@@ -13,9 +13,9 @@ public:
 
 	static void RenderTexture(SDL_Texture *, SDL_Rect &, SDL_Rect * = nullptr, float = 0.0, int = 0, int = 0, SDL_RendererFlip = SDL_FLIP_NONE);
 
-	static SDL_Texture* LoadTexture(std::string);
+	static SDL_Texture* LoadTexture(std::string const &);
 
-	static SDL_Texture* RenderText(std::string, std::string, SDL_Color, int);
+	static SDL_Texture* RenderText(std::string const &, std::string const &, SDL_Color, int);
 
 	static void Clear();
 

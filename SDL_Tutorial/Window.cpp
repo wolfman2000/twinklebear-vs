@@ -1,5 +1,6 @@
 #include "Window.hpp"
 #include <SDL_ttf.h>
+#include <SDL_image.h>
 
 // static calls get initialized up at the top.
 std::unique_ptr<SDL_Window, void (*)(SDL_Window *)> Window::_window = 
@@ -47,4 +48,38 @@ void Window::RenderTexture(SDL_Texture *tex, SDL_Rect &dstRect, SDL_Rect *clip, 
 	SDL_Point pivot = { xPivot, yPivot };
 
 	SDL_RenderCopyEx(_renderer.get(), tex,clip, &dstRect, angle, &pivot, flip);
+}
+
+SDL_Texture* Window::LoadTexture(std::string const &file) {
+	SDL_Texture *texture = IMG_LoadTexture(_renderer.get(), file.c_str());
+	if (texture == nullptr) {
+		throw std::runtime_error("Failed to create texture");
+	}
+
+	return texture;
+}
+
+SDL_Texture* Window::RenderText(std::string const &message, std::string const &fontFile, SDL_Color color, int fontSize) {
+	TTF_Font *font = TTF_OpenFont(fontFile.c_str(), fontSize);
+	if (font == nullptr) {
+		throw std::runtime_error("Failed to create font");
+		return nullptr;
+	}
+
+	// fonts must be rendered onto a surface to be effective.
+	SDL_Surface *surf = TTF_RenderText_Blended(font, message.c_str(), color);
+	if (surf == nullptr) {
+		TTF_CloseFont(font);
+		throw std::runtime_error("Failed to create surface");
+		return nullptr;
+	}
+
+	SDL_Texture *texture = SDL_CreateTextureFromSurface(_renderer.get(), surf);
+	if (texture == nullptr) {
+		throw std::runtime_error("Failed to create texture");
+	}
+
+	SDL_FreeSurface(surf);
+	TTF_CloseFont(font);
+	return texture;
 }
