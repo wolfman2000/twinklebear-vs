@@ -67,16 +67,35 @@ int main(int argc, char **argv) {
 	if (image == nullptr) {
 		return 5;
 	}
-
-	SDL_RenderClear(ren);
 	
-	int igWidth, igHeight;
-	SDL_QueryTexture(image, nullptr, nullptr, &igWidth, &igHeight);
-	renderTexture(image, ren, SCREEN_WIDTH / 2 - igWidth / 2, SCREEN_HEIGHT / 2 - igHeight / 2);
+	SDL_Event evt;
+	bool quit = false;
 
-	SDL_RenderPresent(ren);
+	while (!quit) {
+		// process all events that took place since the last "time".
+		while (SDL_PollEvent(&evt)) {
+			if (evt.type == SDL_QUIT) {
+				// user is closing the window.
+				quit = true;
+			}
+			else if (evt.type == SDL_KEYDOWN) {
+				// user presses any key.
+				quit = true;
+			}
+			else if (evt.type == SDL_MOUSEBUTTONDOWN) {
+				// User presses a mouse button.
+				quit = true;
+			}
+		}
 
-	SDL_Delay(2000);
+		SDL_RenderClear(ren);
+
+		int igWidth, igHeight;
+		SDL_QueryTexture(image, nullptr, nullptr, &igWidth, &igHeight);
+		renderTexture(image, ren, SCREEN_WIDTH / 2 - igWidth / 2, SCREEN_HEIGHT / 2 - igHeight / 2);
+
+		SDL_RenderPresent(ren);
+	}
 
 	SDL_DestroyTexture(image);
 	SDL_DestroyRenderer(ren);
