@@ -70,6 +70,8 @@ int main(int argc, char **argv) {
 	
 	SDL_Event evt;
 	bool quit = false;
+	int x = 0;
+	int y = 0;
 
 	while (!quit) {
 		// process all events that took place since the last "time".
@@ -80,7 +82,22 @@ int main(int argc, char **argv) {
 			}
 			else if (evt.type == SDL_KEYDOWN) {
 				// user presses any key.
-				quit = true;
+				switch (evt.key.keysym.sym) {
+				case SDLK_DOWN:
+					++y;
+					break;
+				case SDLK_UP:
+					--y;
+					break;
+				case SDLK_LEFT:
+					--x;
+					break;
+				case SDLK_RIGHT:
+					++x;
+					break;
+				default:
+					quit = true;
+				}
 			}
 			else if (evt.type == SDL_MOUSEBUTTONDOWN) {
 				// User presses a mouse button.
@@ -90,9 +107,7 @@ int main(int argc, char **argv) {
 
 		SDL_RenderClear(ren);
 
-		int igWidth, igHeight;
-		SDL_QueryTexture(image, nullptr, nullptr, &igWidth, &igHeight);
-		renderTexture(image, ren, SCREEN_WIDTH / 2 - igWidth / 2, SCREEN_HEIGHT / 2 - igHeight / 2);
+		renderTexture(image, ren, x, y);
 
 		SDL_RenderPresent(ren);
 	}
