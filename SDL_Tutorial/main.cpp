@@ -106,27 +106,19 @@ int main(int argc, char **argv) {
 		return 5;
 	}
 
-	SDL_Texture *image = loadTexture("image.png", ren);
+	SDL_Color color = { 255, 255, 255 };
+	SDL_Texture *image = renderText("TTF fonts are cool!", "sample.ttf", color, 64, ren);
 	if (image == nullptr) {
 		return 6;
 	}
 	
 	SDL_Event evt;
 	bool quit = false;
-	// only drawing the clips: do so at the center.
-	int iWidth = 100, iHeight = 100;
+	
+	int iWidth, iHeight;
+	SDL_QueryTexture(image, nullptr, nullptr, &iWidth, &iHeight);
 	int x = SCREEN_WIDTH / 2 - iWidth / 2;
 	int y = SCREEN_HEIGHT / 2 - iHeight / 2;
-
-	std::array<SDL_Rect, 4> clips;
-	for (int i = 0; i < 4; ++i) {
-		clips[i].x = i / 2 * iWidth;
-		clips[i].y = i % 2 * iHeight;
-		clips[i].w = iWidth;
-		clips[i].h = iHeight;
-	}
-
-	int useClip = 0;
 
 	while (!quit) {
 		// process all events that took place since the last "time".
@@ -138,18 +130,6 @@ int main(int argc, char **argv) {
 			else if (evt.type == SDL_KEYDOWN) {
 				// user presses any key.
 				switch (evt.key.keysym.sym) {
-				case SDLK_1:
-					useClip = 0;
-					break;
-				case SDLK_2:
-					useClip = 1;
-					break;
-				case SDLK_3:
-					useClip = 2;
-					break;
-				case SDLK_4:
-					useClip = 3;
-					break;
 				case SDLK_ESCAPE:
 					quit = true;
 					break;
@@ -161,7 +141,7 @@ int main(int argc, char **argv) {
 
 		SDL_RenderClear(ren);
 
-		renderTexture(image, ren, x, y, &clips[useClip]);
+		renderTexture(image, ren, x, y);
 
 		SDL_RenderPresent(ren);
 	}
