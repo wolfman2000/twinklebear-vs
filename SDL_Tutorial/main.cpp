@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <array>
 #include <SDL.h>
 #include <SDL_Image.h>
 
@@ -81,8 +82,20 @@ int main(int argc, char **argv) {
 	
 	SDL_Event evt;
 	bool quit = false;
-	int x = 0;
-	int y = 0;
+	// only drawing the clips: do so at the center.
+	int iWidth = 100, iHeight = 100;
+	int x = SCREEN_WIDTH / 2 - iWidth / 2;
+	int y = SCREEN_HEIGHT / 2 - iHeight / 2;
+
+	std::array<SDL_Rect, 4> clips;
+	for (int i = 0; i < 4; ++i) {
+		clips[i].x = i / 2 * iWidth;
+		clips[i].y = i % 2 * iHeight;
+		clips[i].w = iWidth;
+		clips[i].h = iHeight;
+	}
+
+	int useClip = 0;
 
 	while (!quit) {
 		// process all events that took place since the last "time".
@@ -94,31 +107,30 @@ int main(int argc, char **argv) {
 			else if (evt.type == SDL_KEYDOWN) {
 				// user presses any key.
 				switch (evt.key.keysym.sym) {
-				case SDLK_DOWN:
-					++y;
+				case SDLK_1:
+					useClip = 0;
 					break;
-				case SDLK_UP:
-					--y;
+				case SDLK_2:
+					useClip = 1;
 					break;
-				case SDLK_LEFT:
-					--x;
+				case SDLK_3:
+					useClip = 2;
 					break;
-				case SDLK_RIGHT:
-					++x;
+				case SDLK_4:
+					useClip = 3;
+					break;
+				case SDLK_ESCAPE:
+					quit = true;
 					break;
 				default:
-					quit = true;
+					break;
 				}
-			}
-			else if (evt.type == SDL_MOUSEBUTTONDOWN) {
-				// User presses a mouse button.
-				quit = true;
 			}
 		}
 
 		SDL_RenderClear(ren);
 
-		renderTexture(image, ren, x, y);
+		renderTexture(image, ren, x, y, &clips[useClip]);
 
 		SDL_RenderPresent(ren);
 	}
