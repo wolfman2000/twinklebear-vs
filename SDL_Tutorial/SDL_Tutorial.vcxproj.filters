@@ -20,9 +20,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="background.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="image.png">
       <Filter>Resource Files</Filter>
     </Image>

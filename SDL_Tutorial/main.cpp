@@ -64,22 +64,11 @@ int main(int argc, char **argv) {
 	}
 
 	SDL_Texture *image = loadTexture("image.png", ren);
-	SDL_Texture *background = loadTexture("background.png", ren);
-	if (image == nullptr || background == nullptr) {
+	if (image == nullptr) {
 		return 5;
 	}
 
 	SDL_RenderClear(ren);
-	
-	// single loop instead of nested loop planning.
-	int xTiles = SCREEN_WIDTH / TILE_SIZE;
-	int yTiles = SCREEN_HEIGHT / TILE_SIZE;
-
-	for (int i = 0; i < xTiles * yTiles; ++i) {
-		int x = i % xTiles;
-		int y = i / xTiles;
-		renderTexture(background, ren, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-	}
 	
 	int igWidth, igHeight;
 	SDL_QueryTexture(image, nullptr, nullptr, &igWidth, &igHeight);
@@ -90,7 +79,6 @@ int main(int argc, char **argv) {
 	SDL_Delay(2000);
 
 	SDL_DestroyTexture(image);
-	SDL_DestroyTexture(background);
 	SDL_DestroyRenderer(ren);
 	SDL_DestroyWindow(win);
 
