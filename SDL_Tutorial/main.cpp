@@ -14,10 +14,10 @@ int main(int argc, char **argv) {
 
 	Timer timer;
 
-	SDL_Texture *msg = nullptr, *ticks = nullptr;
+	SDL_Texture *msg = nullptr, *ticks = nullptr, *status = nullptr;
 
 	SDL_Color white = { 255, 255, 255 };
-	SDL_Rect msgBox, ticksBox;
+	SDL_Rect msgBox, ticksBox, statusBox;
 
 	auto box = Window::Box();
 	msg = Window::RenderText("Ticks Elapsed: ", "SourceSansPro-Regular.ttf", white, 30);
@@ -30,6 +30,11 @@ int main(int argc, char **argv) {
 	ticksBox.x = msgBox.w + 20;
 	ticksBox.y = box.h / 2;
 	SDL_QueryTexture(ticks, nullptr, nullptr, &ticksBox.w, &ticksBox.h);
+
+	status = Window::RenderText("Stopped", "SourceSansPro-Regular.ttf", white, 30);
+	statusBox.x = 0;
+	statusBox.y = msgBox.y - 40;
+	SDL_QueryTexture(status, nullptr, nullptr, &statusBox.w, &statusBox.h);
 
 	SDL_Event evt;
 	bool quit = false;
@@ -74,16 +79,32 @@ int main(int argc, char **argv) {
 			SDL_DestroyTexture(ticks);
 			ticks = Window::RenderText(strTicks.c_str(), "SourceSansPro-Regular.ttf", white, 30);
 			SDL_QueryTexture(ticks, nullptr, nullptr, &ticksBox.w, &ticksBox.h);
+
+			SDL_DestroyTexture(status);
+			status = Window::RenderText("Running", "SourceSansPro-Regular.ttf", white, 30);
+			SDL_QueryTexture(status, nullptr, nullptr, &statusBox.w, &statusBox.h);
+		}
+		else if (timer.IsPaused()) {
+			SDL_DestroyTexture(status);
+			status = Window::RenderText("Paused", "SourceSansPro-Regular.ttf", white, 30);
+			SDL_QueryTexture(status, nullptr, nullptr, &statusBox.w, &statusBox.h);
+		}
+		else {
+			SDL_DestroyTexture(status);
+			status = Window::RenderText("Stopped", "SourceSansPro-Regular.ttf", white, 30);
+			SDL_QueryTexture(status, nullptr, nullptr, &statusBox.w, &statusBox.h);
 		}
 
 		Window::Clear();
 		Window::RenderTexture(msg, msgBox);
 		Window::RenderTexture(ticks, ticksBox);
+		Window::RenderTexture(status, statusBox);
 		Window::Present();
 	}
 
 	SDL_DestroyTexture(msg);
 	SDL_DestroyTexture(ticks);
+	SDL_DestroyTexture(status);
 
 	Window::Quit();
 	return 0;
