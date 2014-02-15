@@ -25,7 +25,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="sample.ttf">
+    <Font Include="SourceSansPro-Regular.ttf">
       <Filter>Resource Files</Filter>
     </Font>
   </ItemGroup>

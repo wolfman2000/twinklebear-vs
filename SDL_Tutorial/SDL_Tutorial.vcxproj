@@ -180,7 +180,7 @@ copy "$(ProjectDir)*.ttf" "$(TargetDir)"</Command>
     <Image Include="image.png" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="sample.ttf" />
+    <Font Include="SourceSansPro-Regular.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
