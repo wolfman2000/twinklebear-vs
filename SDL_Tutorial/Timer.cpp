@@ -29,3 +29,25 @@ void Timer::Unpause() {
 		_pausedTicks = 0;
 	}
 }
+
+int Timer::Restart() {
+	auto elapsedTicks = Ticks();
+	Start();
+	return elapsedTicks;
+}
+
+int Timer::Ticks() const {
+	if (!_isStarted) {
+		return 0;
+	}
+
+	return _isPaused ? _pausedTicks : SDL_GetTicks() - _startTicks;
+}
+
+bool Timer::IsPaused() const {
+	return _isPaused;
+}
+
+bool Timer::IsStarted() const {
+	return _isStarted;
+}
