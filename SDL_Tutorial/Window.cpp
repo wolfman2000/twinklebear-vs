@@ -34,3 +34,8 @@ void Window::Init(std::string title) {
 		throw std::runtime_error("Faled to create renderer");
 	}
 }
+
+void Window::Quit() {
+	TTF_Quit();
+	SDL_Quit();
+}
