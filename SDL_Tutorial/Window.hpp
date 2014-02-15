@@ -7,7 +7,7 @@
 
 class Window {
 public:
-	static void Init(std::string = "Window");
+	static void Init(std::string = "Window", int = 640, int = 480);
 
 	static void Quit();
 

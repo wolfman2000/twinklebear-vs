@@ -11,7 +11,7 @@ std::unique_ptr<SDL_Renderer, void (*)(SDL_Renderer *)> Window::_renderer =
 
 SDL_Rect Window::_box;
 
-void Window::Init(std::string title) {
+void Window::Init(std::string title, int width, int height) {
 	// set up all subsystems.
 	if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
 		throw std::runtime_error("SDL Init Failed");
@@ -22,8 +22,8 @@ void Window::Init(std::string title) {
 
 	_box.x = 0;
 	_box.y = 0;
-	_box.w = 640;
-	_box.h = 480;
+	_box.w = width;
+	_box.h = height;
 
 	_window.reset(SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _box.w, _box.h, SDL_WINDOW_SHOWN));
 	if (_window == nullptr) {
