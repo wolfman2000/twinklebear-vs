@@ -99,7 +99,8 @@
       <IgnoreSpecificDefaultLibraries>libc.lib;libcmt.lib;msvcrt.lib;libcd.lib;libcmtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(ProjectDir)*.png" "$(TargetDir)"</Command>
+      <Command>copy "$(ProjectDir)*.png" "$(TargetDir)"
+copy "$(ProjectDir)*.ttf" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -120,7 +121,8 @@
       <IgnoreSpecificDefaultLibraries>libc.lib;libcmt.lib;msvcrt.lib;libcd.lib;libcmtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(ProjectDir)*.png" "$(TargetDir)"</Command>
+      <Command>copy "$(ProjectDir)*.png" "$(TargetDir)"
+copy "$(ProjectDir)*.ttf" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -143,7 +145,8 @@
       <IgnoreSpecificDefaultLibraries>libc.lib;libcmt.lib;libcd.lib;libcmtd.lib;msvcrtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(ProjectDir)*.png" "$(TargetDir)"</Command>
+      <Command>copy "$(ProjectDir)*.png" "$(TargetDir)"
+copy "$(ProjectDir)*.ttf" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -166,7 +169,8 @@
       <IgnoreSpecificDefaultLibraries>libc.lib;libcmt.lib;libcd.lib;libcmtd.lib;msvcrtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(ProjectDir)*.png" "$(TargetDir)"</Command>
+      <Command>copy "$(ProjectDir)*.png" "$(TargetDir)"
+copy "$(ProjectDir)*.ttf" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -174,6 +178,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="sample.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
