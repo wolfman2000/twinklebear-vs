@@ -2,6 +2,7 @@
 #define WINDOW_HPP_
 
 #include <string>
+#include <memory>
 #include <SDL.h>
 
 class Window {
@@ -23,8 +24,8 @@ public:
 	static SDL_Rect Box();
 	
 private:
-	static SDL_Window* _window;
-	static SDL_Renderer* _renderer;
+	static std::unique_ptr<SDL_Window, void (*)(SDL_Window *)> _window;
+	static std::unique_ptr<SDL_Renderer, void (*)(SDL_Renderer *)> _renderer;
 	static SDL_Rect _box;
 };
 
