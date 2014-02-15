@@ -11,7 +11,7 @@ public:
 
 	static void Quit();
 
-	static void RenderTexture(SDL_Texture *, ...);
+	static void RenderTexture(SDL_Texture *, SDL_Rect &, SDL_Rect * = nullptr, float = 0.0, int = 0, int = 0, SDL_RendererFlip = SDL_FLIP_NONE);
 
 	static SDL_Texture* LoadTexture(std::string);
 

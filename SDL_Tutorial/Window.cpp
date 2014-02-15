@@ -39,3 +39,12 @@ void Window::Quit() {
 	TTF_Quit();
 	SDL_Quit();
 }
+
+void Window::RenderTexture(SDL_Texture *tex, SDL_Rect &dstRect, SDL_Rect *clip, float angle, int xPivot, int yPivot, SDL_RendererFlip flip) {
+	// convert coordinates appropriately.
+	xPivot += dstRect.w / 2;
+	yPivot += dstRect.h / 2;
+	SDL_Point pivot = { xPivot, yPivot };
+
+	SDL_RenderCopyEx(_renderer.get(), tex,clip, &dstRect, angle, &pivot, flip);
+}
