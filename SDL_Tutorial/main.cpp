@@ -3,6 +3,7 @@
 #include <array>
 #include <SDL.h>
 #include <SDL_Image.h>
+#include <SDL_ttf.h>
 
 int const SCREEN_WIDTH = 640;
 int const SCREEN_HEIGHT = 480;
@@ -12,6 +13,31 @@ int const TILE_SIZE = 40;
 
 void logSDLError(std::ostream &os, std::string const &msg) {
 	os << msg << " error: " << SDL_GetError() << std::endl;
+}
+
+SDL_Texture* renderText(std::string const &message, std::string const &fontFile, SDL_Color color, int fontSize, SDL_Renderer *renderer) {
+	TTF_Font *font = TTF_OpenFont(fontFile.c_str(), fontSize);
+	if (font == nullptr) {
+		logSDLError(std::cout, "TTF_OpenFont");
+		return nullptr;
+	}
+
+	// fonts must be rendered onto a surface to be effective.
+	SDL_Surface *surf = TTF_RenderText_Blended(font, message.c_str(), color);
+	if (surf == nullptr) {
+		TTF_CloseFont(font);
+		logSDLError(std::cout, "TTF_RenderText");
+		return nullptr;
+	}
+
+	SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
+	if (texture == nullptr) {
+		logSDLError(std::cout, "CreateTexture");
+	}
+
+	SDL_FreeSurface(surf);
+	TTF_CloseFont(font);
+	return texture;
 }
 
 SDL_Texture* loadTexture(std::string const &file, SDL_Renderer *ren) {
