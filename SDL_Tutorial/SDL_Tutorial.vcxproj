@@ -184,6 +184,7 @@ copy "$(ProjectDir)*.ttf" "$(TargetDir)"</Command>
     <Font Include="SourceSansPro-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Timer.hpp" />
     <ClInclude Include="Window.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
