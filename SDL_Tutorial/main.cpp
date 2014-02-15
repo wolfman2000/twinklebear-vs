@@ -22,6 +22,10 @@ SDL_Texture* loadTexture(std::string const &file, SDL_Renderer *ren) {
 	return texture;
 }
 
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst, SDL_Rect *clip = nullptr) {
+	SDL_RenderCopy(ren, tex, clip, &dst);
+}
+
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h) {
 	SDL_Rect dst;
 	dst.x = x;
@@ -31,11 +35,18 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int
 	SDL_RenderCopy(ren, tex, nullptr, &dst);
 }
 
-void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y) {
-	int w, h;
-	// by querying the texture, we can utilize its width and height.
-	SDL_QueryTexture(tex, nullptr, nullptr, &w, &h);
-	renderTexture(tex, ren, x, y, w, h);
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, SDL_Rect *clip = nullptr) {
+	SDL_Rect dst;
+	dst.x = x;
+	dst.y =y;
+	if (clip != nullptr) {
+		dst.w = clip->w;
+		dst.h = clip->h;
+	}
+	else {
+		SDL_QueryTexture(tex, nullptr, nullptr, &dst.w, &dst.h);
+	}
+	renderTexture(tex, ren, dst, clip);
 }
 
 int main(int argc, char **argv) {
